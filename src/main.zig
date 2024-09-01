@@ -18,7 +18,7 @@ pub fn main() !void {
     var controller = TodoController.init(&model, &view);
 
     while (!rl.windowShouldClose()) {
-        controller.handleInput();
+        controller.handleEvents();
         controller.update();
         view.render(&model);
     }

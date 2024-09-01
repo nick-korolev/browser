@@ -13,9 +13,12 @@ pub const TodoController = struct {
         };
     }
 
-    pub fn handleInput(self: *TodoController) void {
-        self.view.inputField.handleInput();
-        self.model.updateInputText(&self.view.inputField.text);
+    pub fn handleEvents(self: *TodoController) void {
+        const events = self.view.handleEvents();
+
+        if (events.inputChanged) {
+            self.model.updateInputText(&self.view.inputField.text);
+        }
     }
 
     pub fn update(_: *TodoController) void {}

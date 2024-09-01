@@ -29,4 +29,8 @@ pub const TodoView = struct {
             inputText.draw();
         }
     }
+
+    pub fn handleEvents(self: *TodoView) struct { inputChanged: bool, addClicked: bool, toggleIndex: ?usize } {
+        return .{ .inputChanged = self.inputField.handleInput(), .addClicked = false, .toggleIndex = null };
+    }
 };

@@ -36,6 +36,7 @@ pub const InputField = struct {
     textLength: usize,
     color: rl.Color,
     textColor: rl.Color,
+    isFocused: bool,
 
     pub fn init(x: f32, y: f32, width: f32, height: f32, color: rl.Color, textColor: rl.Color) InputField {
         return InputField{
@@ -44,21 +45,30 @@ pub const InputField = struct {
             .textLength = 0,
             .color = color,
             .textColor = textColor,
+            .isFocused = false,
         };
     }
 
     pub fn draw(self: *const InputField) void {
         rl.drawRectangleRec(self.rect, self.color);
         rl.drawText(&self.text, @as(c_int, @intFromFloat(self.rect.x + 5)), @as(c_int, @intFromFloat(self.rect.y + 5)), 20, self.textColor);
+        if (self.isFocused) {
+            rl.drawRectangleLinesEx(self.rect, 2, rl.Color.red);
+        }
     }
 
-    pub fn handleInput(self: *InputField) void {
+    pub fn handleInput(self: *InputField) bool {
+        _ = self.checkFocus();
+        if (!self.isFocused) return false;
+
+        var changed = false;
         const key = rl.getCharPressed();
         if (key != 0) {
             if (self.textLength < 255) {
                 self.text[self.textLength] = @intCast(key);
                 self.textLength += 1;
                 self.text[self.textLength] = 0;
+                changed = true;
             }
         }
 
@@ -66,8 +76,19 @@ pub const InputField = struct {
             if (self.textLength > 0) {
                 self.textLength -= 1;
                 self.text[self.textLength] = 0;
+                changed = true;
             }
         }
+
+        return changed;
+    }
+
+    pub fn checkFocus(self: *InputField) bool {
+        const mousePos = rl.getMousePosition();
+        if (rl.isMouseButtonPressed(rl.MouseButton.mouse_button_left)) {
+            self.isFocused = rl.checkCollisionPointRec(mousePos, self.rect);
+        }
+        return self.isFocused;
     }
 };
 
