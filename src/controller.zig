@@ -1,6 +1,7 @@
 const TodoModel = @import("model.zig").TodoModel;
 const TodoView = @import("view.zig").TodoView;
 const rl = @import("raylib");
+const std = @import("std");
 
 pub const TodoController = struct {
     model: *TodoModel,
@@ -18,6 +19,9 @@ pub const TodoController = struct {
 
         if (events.inputChanged) {
             self.model.updateInputText(&self.view.inputField.text);
+        }
+        if (events.addClicked) {
+            std.debug.print("clicked!", .{});
         }
     }
 

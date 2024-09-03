@@ -26,7 +26,7 @@ pub const Button = struct {
     }
 
     pub fn isClicked(self: *const Button) bool {
-        return rl.checkCollisionPointRec(rl.getMousePosition(), self.rect) and rl.isMouseButtonPressed(rl.MouseButton.left);
+        return rl.checkCollisionPointRec(rl.getMousePosition(), self.rect) and rl.isMouseButtonPressed(rl.MouseButton.mouse_button_left);
     }
 
     pub fn onClick(self: *const Button, callback: fn () void) void {
