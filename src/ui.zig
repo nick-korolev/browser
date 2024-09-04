@@ -96,6 +96,11 @@ pub const InputField = struct {
         }
         return self.isFocused;
     }
+
+    pub fn clear(self: *InputField) void {
+        @memset(&self.text, 0);
+        self.textLength = 0;
+    }
 };
 
 pub const Text = struct {

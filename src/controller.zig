@@ -14,14 +14,16 @@ pub const TodoController = struct {
         };
     }
 
-    pub fn handleEvents(self: *TodoController) void {
+    pub fn handleEvents(self: *TodoController) !void {
         const events = self.view.handleEvents();
 
         if (events.inputChanged) {
             self.model.updateInputText(&self.view.inputField.text);
         }
         if (events.addClicked) {
-            std.debug.print("clicked!", .{});
+            try self.model.addTodo(self.view.inputField.text);
+            self.model.clearInputText();
+            self.view.clearInput();
         }
     }
 
