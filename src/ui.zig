@@ -125,34 +125,3 @@ pub const Text = struct {
         rl.drawText(self.text, @as(c_int, @intFromFloat(self.x)), @as(c_int, @intFromFloat(self.y)), self.fontSize, self.color);
     }
 };
-
-pub const List = struct {
-    x: f32,
-    y: f32,
-    width: f32,
-    height: f32,
-    items: std.ArrayList([*:0]const u8),
-    fontSize: c_int,
-    color: rl.Color,
-
-    pub fn init(x: f32, y: f32, width: f32, height: f32, items: std.ArrayList([*:0]const u8), fontSize: c_int, color: rl.Color) List {
-        return List{
-            .x = x,
-            .y = y,
-            .width = width,
-            .height = height,
-            .items = items,
-            .fontSize = fontSize,
-            .color = color,
-        };
-    }
-
-    pub fn draw(self: *List) void {
-        var currentY = self.y;
-
-        for (self.items.items) |item| {
-            rl.drawText(item, @as(c_int, @intFromFloat(self.x)), @as(c_int, @intFromFloat(currentY)), self.fontSize, self.color);
-            currentY += @as(f32, @floatFromInt(self.fontSize)) + 5;
-        }
-    }
-};

@@ -25,10 +25,10 @@ pub const TodoView = struct {
         self.inputField.draw();
         self.addButton.draw();
 
-        var currentY = 100;
+        var currentY: i32 = 100;
         for (model.todos.items) |todo| {
-            rl.drawText(todo.text, @as(c_int, 10), @as(c_int, currentY), 20, rl.Color.black);
-            currentY += @as(f32, @floatFromInt(20)) + 5;
+            rl.drawText(@ptrCast(todo.text), @as(c_int, 10), @as(c_int, currentY), 20, rl.Color.black);
+            currentY += 20 + 5;
         }
 
         if (model.input_text_length > 0) {
