@@ -1,5 +1,6 @@
 const rl = @import("raylib");
 const ui = @import("ui.zig");
+const std = @import("std");
 const TodoModel = @import("model.zig").TodoModel;
 
 pub const TodoView = struct {
@@ -23,6 +24,12 @@ pub const TodoView = struct {
         self.titleText.draw();
         self.inputField.draw();
         self.addButton.draw();
+
+        var currentY = 100;
+        for (model.todos.items) |todo| {
+            rl.drawText(todo.text, @as(c_int, 10), @as(c_int, currentY), 20, rl.Color.black);
+            currentY += @as(f32, @floatFromInt(20)) + 5;
+        }
 
         if (model.input_text_length > 0) {
             const inputText = ui.Text.init(10, 100, @constCast(&model.input_text), 20, rl.Color.black);
