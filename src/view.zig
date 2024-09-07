@@ -26,6 +26,7 @@ pub const TodoView = struct {
         self.addButton.draw();
 
         var currentY: i32 = 100;
+
         const fontSize: i32 = 20;
         for (model.todos.items) |todo| {
             rl.drawText(@ptrCast(todo.text), @as(c_int, 10), @as(c_int, currentY), fontSize, rl.Color.black);

@@ -9,6 +9,7 @@ pub fn main() !void {
     const screenHeight = 600;
     rl.initWindow(screenWidth, screenHeight, "Todo App");
     defer rl.closeWindow();
+
     rl.setTargetFPS(60);
 
     var model = TodoModel.init(std.heap.page_allocator);
