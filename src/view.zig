@@ -1,5 +1,5 @@
 const rl = @import("raylib");
-const ui = @import("ui.zig");
+const ui = @import("./ui/index.zig");
 const std = @import("std");
 const TodoModel = @import("model.zig").TodoModel;
 
