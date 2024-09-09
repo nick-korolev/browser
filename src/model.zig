@@ -51,6 +51,17 @@ pub const TodoModel = struct {
         std.debug.print("added todo: {s}\n todos: {any}\n", .{ trimmedText, self.todos.items });
     }
 
+    pub fn toggleTodo(self: *TodoModel, id: u32) void {
+        std.debug.print("toggling todo: {d}\n", .{id});
+        for (self.todos.items) |*todo| {
+            if (todo.id == id) {
+                todo.completed = !todo.completed;
+                std.debug.print("toggled todo: {s}\n todos: {any}\n", .{ todo.text, self.todos.items });
+                return;
+            }
+        }
+    }
+
     pub fn clearInputText(self: *TodoModel) void {
         @memset(&self.input_text, 0);
         self.input_text_length = 0;

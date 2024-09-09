@@ -29,14 +29,16 @@ pub const TodoView = struct {
 
         const fontSize: i32 = 20;
         for (model.todos.items) |todo| {
-            const textItem = ui.Text.init(10, currentY, @ptrCast(todo.text), fontSize, rl.Color.black);
-            textItem.draw();
-            currentY += fontSize + 5;
-        }
+            var textItem = ui.Text.init(10, currentY, @ptrCast(todo.text), fontSize, rl.Color.black);
+            textItem.setStrikethrough(todo.completed);
 
-        if (model.input_text_length > 0) {
-            const inputText = ui.Text.init(10, 100, @constCast(&model.input_text), 20, rl.Color.black);
-            inputText.draw();
+            textItem.draw();
+            if (textItem.isClicked()) {
+                model.toggleTodo(todo.id);
+                textItem.setStrikethrough(todo.completed);
+            }
+
+            currentY += fontSize + 5;
         }
     }
 
